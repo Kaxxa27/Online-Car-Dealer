@@ -48,7 +48,7 @@ public class MemoryCarService : ICarService
                 Id = 3,
                 Name = "Porshe Panamera",
                 Description = "Panama",
-                Image = "images/porshe_panamera.jpg",
+                Image = "images/porshe_panamera.jpeg",
                 Price = 123456,
                 Category = _categories.Find(c => c.NormalizedName.Equals("cars"))
             },
@@ -111,7 +111,7 @@ public class MemoryCarService : ICarService
                 Id = 10,
                 Name = "Jeep",
                 Description = "Jeep",
-                Image = "images/jeep.jpg",
+                Image = "images/jeep.jpeg",
                 Price = 23000,
                 Category = _categories.Find(c => c.NormalizedName.Equals("trucks"))
             },
@@ -138,7 +138,7 @@ public class MemoryCarService : ICarService
                 Id = 13,
                 Name = "Crusak 100",
                 Description = "Bandit",
-                Image = "images/crusak_100.jpg",
+                Image = "images/crusak_100.jfif",
                 Price = 77000,
                 Category = _categories.Find(c => c.NormalizedName.Equals("trucks"))
             },
