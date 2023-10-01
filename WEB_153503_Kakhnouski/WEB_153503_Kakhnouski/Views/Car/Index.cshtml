@@ -1,0 +1,41 @@
+﻿@model ListModel<Car>
+
+@{
+    ViewData["Title"] = "Cars";
+
+    var request = ViewContext.HttpContext.Request;
+    var returnUrl = request.Path + request.QueryString.ToUriComponent();
+
+    //var categories = ViewData["caregories"] as List<Category>;
+    //var currentCategory = ViewData["currentCategory"] as Category;
+
+    //int prev = Model.CurrentPage == 1 ? 1 : Model.CurrentPage - 1;
+    //int next = Model.CurrentPage == Model.TotalPages ? Model.TotalPages : Model.CurrentPage + 1;
+}
+
+<h1>Автомобили</h1>
+
+
+<div class="row">
+
+    <!-- Вывод карточек -->
+    <div class="col-10 row">
+        @foreach (var car in Model.Items)
+        {
+            <div class="col-md-4">
+                <div class="card mb-4">
+                    <img src="@car.Image" width="100" height="250" class="card-img-top" alt="@car.Name">
+                    <div class="card-body">
+                        <h5 class="card-title">Марка: @car.Name</h5>
+                        <div class="card-text">Цена: @car.Price</div>
+                        <p class="card-text"> Описание: @car.Description</p>
+                        <a asp-controller="Cart" asp-action="Add" asp-route-id="@car.Id" asp-route-returnurl="@returnUrl"
+                           class="btn btn-primary">Добавить в корзину</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+    <!-- Вывод карточек - конец -->
+</div>
+

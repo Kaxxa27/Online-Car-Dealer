@@ -27,16 +27,18 @@ public class MemoryCarService : ICarService
                 Id = 1,
                 Name = "BMW E38",
                 Description = "Bumer",
+                Image = "images/bmw_e38.jpg",
                 Price = 5000,
-                CategoryId = _categories.Find(c => c.NormalizedName.Equals("car"))
+                Category = _categories.Find(c => c.NormalizedName.Equals("cars"))
             },
             new Car
             {
                 Id = 2,
-                Name = "Mersedes W400",
+                Name = "Mersedes W140",
                 Description = "Kaban",
+                Image = "images/mersedes_w140.jpg",
                 Price = 10000,
-                CategoryId = _categories.Find(c => c.NormalizedName.Equals("car"))
+                Category = _categories.Find(c => c.NormalizedName.Equals("cars"))
             },
         };
     }
@@ -56,9 +58,11 @@ public class MemoryCarService : ICarService
         throw new NotImplementedException();
     }
 
-    public Task<ResponseData<ListModel<Car>>> GetCarListAsync(string? categoryNormalizedName, int pageNo = 1)
+    public Task<ResponseData<ListModel<Car>>> GetCarListAsync(string? categoryNormalizedName = "cars", int pageNo = 1)
     {
-        throw new NotImplementedException();
+        var listCars = new ListModel<Car>();
+        listCars.Items = _cars.Where(c => c.Category.NormalizedName == categoryNormalizedName).ToList();  
+        return Task.FromResult(new ResponseData<ListModel<Car>>() { Data=listCars});
     }
 
     public Task UpdateCarAsync(int id, Car car, IFormFile? formFile)

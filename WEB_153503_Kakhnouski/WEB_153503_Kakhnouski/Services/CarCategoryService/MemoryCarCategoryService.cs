@@ -13,7 +13,7 @@ public class MemoryCarCategoryService : ICarCategoryService
             new Category {Id=1, Name="A", 
                 NormalizedName="motorcycles"},
             new Category {Id=2, Name="B", 
-                NormalizedName="сars"},
+                NormalizedName="cars"},
             new Category {Id=3, Name="C", 
                 NormalizedName="trucks"},
             new Category {Id=4, Name="D", 
