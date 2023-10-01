@@ -1,3 +1,7 @@
+using WEB_153503_Kakhnouski.Services.CarCategoryService;
+using WEB_153503_Kakhnouski.Services.CarService;
+using WEB_153503_Kakhnouski.Services.CategoryServicep;
+
 namespace WEB_153503_Kakhnouski
 {
     public class Program
@@ -8,6 +12,8 @@ namespace WEB_153503_Kakhnouski
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+            builder.Services.AddScoped<ICarCategoryService, MemoryCarCategoryService>();
+            builder.Services.AddScoped<ICarService, MemoryCarService>();
 
             var app = builder.Build();
 
