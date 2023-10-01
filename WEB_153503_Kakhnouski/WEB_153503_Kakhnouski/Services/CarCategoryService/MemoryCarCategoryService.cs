@@ -11,13 +11,13 @@ public class MemoryCarCategoryService : ICarCategoryService
         var categories = new List<Category>() 
         { 
             new Category {Id=1, Name="A", 
-                NormalizedName="motorcycles"},
+                NormalizedName="moto"},
             new Category {Id=2, Name="B", 
                 NormalizedName="cars"},
             new Category {Id=3, Name="C", 
                 NormalizedName="trucks"},
             new Category {Id=4, Name="D", 
-                NormalizedName="buses"},
+                NormalizedName="bus"},
         };
 
         return new ResponseData<List<Category>>() { Data = categories };

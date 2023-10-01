@@ -24,7 +24,7 @@ public class CarController : Controller
         ViewData["caregories"] = categoryResponse.Data;
         ViewData["currentCategory"] = categoryResponse.Data.SingleOrDefault(c => c.NormalizedName == category);
 
-        var productResponse = await _carService.GetCarListAsync(category);
+        var productResponse = await _carService.GetCarListAsync(category, pageNo);
         if (!productResponse.Success)
             return NotFound(productResponse.ErrorMessage);
         return View(productResponse.Data);
