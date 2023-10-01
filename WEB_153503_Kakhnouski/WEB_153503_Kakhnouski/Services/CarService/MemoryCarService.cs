@@ -58,10 +58,10 @@ public class MemoryCarService : ICarService
         throw new NotImplementedException();
     }
 
-    public Task<ResponseData<ListModel<Car>>> GetCarListAsync(string? categoryNormalizedName = "cars", int pageNo = 1)
+    public Task<ResponseData<ListModel<Car>>> GetCarListAsync(string? categoryNormalizedName, int pageNo = 1)
     {
         var listCars = new ListModel<Car>();
-        listCars.Items = _cars.Where(c => c.Category.NormalizedName == categoryNormalizedName).ToList();  
+        listCars.Items = _cars.Where(c => c.Category.NormalizedName == categoryNormalizedName || categoryNormalizedName is null).ToList();  
         return Task.FromResult(new ResponseData<ListModel<Car>>() { Data=listCars});
     }
 

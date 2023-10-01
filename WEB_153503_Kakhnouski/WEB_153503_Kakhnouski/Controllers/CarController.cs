@@ -15,8 +15,15 @@ public class CarController : Controller
         _carCategoryService = carCategoryService;
         _carService = carService;
     }
-    public async Task<IActionResult> Index(string? category = "cars", int pageNo = 1)
+    public async Task<IActionResult> Index(string? category, int pageNo = 1)
     {
+        var categoryResponse = await _carCategoryService.GetCategoryListAsync();
+        if (!categoryResponse.Success)
+            return NotFound(categoryResponse.ErrorMessage);
+
+        ViewData["caregories"] = categoryResponse.Data;
+        ViewData["currentCategory"] = categoryResponse.Data.SingleOrDefault(c => c.NormalizedName == category);
+
         var productResponse = await _carService.GetCarListAsync(category);
         if (!productResponse.Success)
             return NotFound(productResponse.ErrorMessage);

@@ -6,8 +6,8 @@
     var request = ViewContext.HttpContext.Request;
     var returnUrl = request.Path + request.QueryString.ToUriComponent();
 
-    //var categories = ViewData["caregories"] as List<Category>;
-    //var currentCategory = ViewData["currentCategory"] as Category;
+    var categories = ViewData["caregories"] as List<Category>;
+    var currentCategory = ViewData["currentCategory"] as Category;
 
     //int prev = Model.CurrentPage == 1 ? 1 : Model.CurrentPage - 1;
     //int next = Model.CurrentPage == Model.TotalPages ? Model.TotalPages : Model.CurrentPage + 1;
@@ -17,6 +17,41 @@
 
 
 <div class="row">
+
+    <!-- Выбор категории -->
+    <h2>Категории автомобилей</h2>
+    <div class="col-2">
+        <ul class="nav ">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle"
+                   data-bs-toggle="dropdown"
+                   href="#"
+                   role="button"
+                   aria-expanded="false">
+                    <b>@(currentCategory?.Name ?? "Все")</b>
+                </a>
+
+                <ul class="dropdown-menu">
+                    <li>
+                        <a class="dropdown-item"
+                           asp-controller="Car"
+                           asp-route-category=@null><b>Все</b></a>
+                    </li>
+                    @foreach (var item in categories!)
+                    {
+                        <li>
+                            <a class="dropdown-item"
+                               asp-controller="Car"
+                               asp-route-category="@item.NormalizedName">
+                               @item.Name
+                            </a>
+                        </li>
+                    }
+                </ul>
+            </li>
+        </ul>
+    </div>
+    <!-- Выбор категории - конец -->
 
     <!-- Вывод карточек -->
     <div class="col-10 row">
