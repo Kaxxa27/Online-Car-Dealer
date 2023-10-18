@@ -23,6 +23,7 @@ namespace WEB_153503_Kakhnouski.API
                 app.UseSwaggerUI();
             }
 
+            app.UseStaticFiles();
             app.UseHttpsRedirection();
 
             app.UseAuthorization();

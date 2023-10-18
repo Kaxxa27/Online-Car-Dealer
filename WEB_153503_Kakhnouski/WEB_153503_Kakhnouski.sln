@@ -8,7 +8,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WEB_153503_Kakhnouski", "WE
 		{63753B25-2FE6-410A-9E99-742F831C155A} = {63753B25-2FE6-410A-9E99-742F831C155A}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WEB_153503_Kakhnouski.Domain", "WEB_153503_Kakhnouski.Domain\WEB_153503_Kakhnouski.Domain.csproj", "{63753B25-2FE6-410A-9E99-742F831C155A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WEB_153503_Kakhnouski.Domain", "WEB_153503_Kakhnouski.Domain\WEB_153503_Kakhnouski.Domain.csproj", "{63753B25-2FE6-410A-9E99-742F831C155A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WEB_153503_Kakhnouski.API", "WEB_153503_Kakhnouski.API\WEB_153503_Kakhnouski.API.csproj", "{EE4EC90C-ABE8-40EE-9D75-B97723067EDF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -24,6 +26,10 @@ Global
 		{63753B25-2FE6-410A-9E99-742F831C155A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{63753B25-2FE6-410A-9E99-742F831C155A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{63753B25-2FE6-410A-9E99-742F831C155A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EE4EC90C-ABE8-40EE-9D75-B97723067EDF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EE4EC90C-ABE8-40EE-9D75-B97723067EDF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EE4EC90C-ABE8-40EE-9D75-B97723067EDF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EE4EC90C-ABE8-40EE-9D75-B97723067EDF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
