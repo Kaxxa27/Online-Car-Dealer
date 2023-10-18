@@ -1,3 +1,6 @@
+global using System.Collections.Generic;
+global using System.Threading.Tasks;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using WEB_153503_Kakhnouski.API.Data;
 using WEB_153503_Kakhnouski.API.Services.CarCategoryService;

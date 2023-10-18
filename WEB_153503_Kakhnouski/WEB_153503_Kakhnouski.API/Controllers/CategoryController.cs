@@ -16,7 +16,7 @@ namespace WEB_153503_Kakhnouski.API.Controllers
             _carCategoryService = carCategoryService;
         }
 
-        // GET: api/Categories
+        // GET: api/Category
         [HttpGet]
         public async Task<ActionResult<ResponseData<List<Category>>>> GetCategories()
         {

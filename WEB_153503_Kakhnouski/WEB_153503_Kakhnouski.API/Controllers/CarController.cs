@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+
 using WEB_153503_Kakhnouski.Domain.Entities;
 using WEB_153503_Kakhnouski.Domain.Models;
 using WEB_153503_Kakhnouski.Services.CarService;
@@ -25,7 +26,7 @@ namespace WEB_153503_Kakhnouski.API.Controllers
         }
 
         // GET: api/Cars/car5
-        [HttpGet("car{id}")]
+        [HttpGet("car{id:int}")]
         public async Task<ActionResult<ResponseData<Car>>> GetCar(int id)
         {
             var result = await _carService.GetCarByIdAsync(id);

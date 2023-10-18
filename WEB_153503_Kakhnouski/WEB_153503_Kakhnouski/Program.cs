@@ -1,3 +1,4 @@
+using WEB_153503_Kakhnouski.Models;
 using WEB_153503_Kakhnouski.Services.CarCategoryService;
 using WEB_153503_Kakhnouski.Services.CarService;
 using WEB_153503_Kakhnouski.Services.CategoryServicep;
@@ -12,8 +13,16 @@ namespace WEB_153503_Kakhnouski
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
-            builder.Services.AddScoped<ICarCategoryService, MemoryCarCategoryService>();
-            builder.Services.AddScoped<ICarService, MemoryCarService>();
+            //builder.Services.AddScoped<ICarCategoryService, MemoryCarCategoryService>();
+            //builder.Services.AddScoped<ICarService, MemoryCarService>();
+            builder.Services.AddScoped<ICarCategoryService, ApiCarCategoryService>();
+            builder.Services.AddScoped<ICarService, ApiCarService>();
+
+
+            UriData uriData = builder.Configuration.GetSection("UriData").Get<UriData>()!;
+
+            builder.Services.AddHttpClient<ICarService, ApiCarService>(opt => opt.BaseAddress = new Uri(uriData.ApiUri));
+            builder.Services.AddHttpClient<ICarCategoryService, ApiCarCategoryService>(opt => opt.BaseAddress = new Uri(uriData.ApiUri));
 
             var app = builder.Build();
 
