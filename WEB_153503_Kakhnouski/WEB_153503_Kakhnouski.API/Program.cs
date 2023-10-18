@@ -1,4 +1,3 @@
-
 using Microsoft.EntityFrameworkCore;
 using WEB_153503_Kakhnouski.API.Data;
 
@@ -6,7 +5,7 @@ namespace WEB_153503_Kakhnouski.API;
 
 public class Program
 {
-    public static void Main(string[] args)
+    public static async Task Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
 
@@ -24,6 +23,8 @@ public class Program
 
 
         var app = builder.Build();
+
+        //await DbInitializer.SeedData(app);
 
         // Configure the HTTP request pipeline.
         if (app.Environment.IsDevelopment())
