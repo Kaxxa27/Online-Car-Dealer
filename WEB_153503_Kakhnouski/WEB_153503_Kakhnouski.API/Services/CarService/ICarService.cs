@@ -28,7 +28,7 @@ public interface ICarService
     /// <param name="car">Object with new parameters</param>
     /// <param name="formFile">Image file</param>
     /// <returns></returns>
-    public Task UpdateCarAsync(int id, Car car, IFormFile? formFile);
+    public Task UpdateCarAsync(int id, Car car);
 
     /// <summary>
     /// Delete odject
@@ -43,7 +43,7 @@ public interface ICarService
     /// <param name="car">New object</param>
     /// <param name="formFile">Image file</param>
     /// <returns>Created object</returns>
-    public Task<ResponseData<Car>> CreateCarAsync(Car car, IFormFile?formFile);
+    public Task<ResponseData<Car>> CreateCarAsync(Car car);
 
     /// <summary>
     /// Save image file for object
@@ -51,5 +51,5 @@ public interface ICarService
     /// <param name="id">Id object</param>
     /// <param name="formFile">Image file</param>
     /// <returns>Url to image file</returns>
-    public Task<ResponseData<string>>  SaveImageAsync(int id, IFormFile? formFile);
+    public Task<ResponseData<string>>  SaveImageAsync(int car, IFormFile? formFile);
 }

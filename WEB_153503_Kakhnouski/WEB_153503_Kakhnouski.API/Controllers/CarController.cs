@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using WEB_153503_Kakhnouski.API.Data;
+﻿using Microsoft.AspNetCore.Mvc;
 using WEB_153503_Kakhnouski.Domain.Entities;
+using WEB_153503_Kakhnouski.Domain.Models;
+using WEB_153503_Kakhnouski.Services.CarService;
 
 namespace WEB_153503_Kakhnouski.API.Controllers
 {
@@ -14,111 +9,87 @@ namespace WEB_153503_Kakhnouski.API.Controllers
     [ApiController]
     public class CarController : ControllerBase
     {
-        private readonly AppDbContext _context;
-
-        public CarController(AppDbContext context)
+        private readonly ICarService _carService;
+        public CarController(ICarService carService)
         {
-            _context = context;
+            _carService = carService;
         }
 
         // GET: api/Cars
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<Car>>> GetCars()
+        [HttpGet("{pageNo:int}")]
+        [HttpGet("{category?}/{pageNo:int?}/")]
+        public async Task<ActionResult<ResponseData<List<Car>>>> GetCars(string? category, int pageNo = 1, int pageSize = 3)
         {
-          if (_context.Cars == null)
-          {
-              return NotFound();
-          }
-            return await _context.Cars.ToListAsync();
+            var result = await _carService.GetCarListAsync(category, pageNo, pageSize);
+            return result.Success ? Ok(result) : BadRequest(result);
         }
 
-        // GET: api/Cars/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Car>> GetCar(int id)
+        // GET: api/Cars/car5
+        [HttpGet("car{id}")]
+        public async Task<ActionResult<ResponseData<Car>>> GetCar(int id)
         {
-          if (_context.Cars == null)
-          {
-              return NotFound();
-          }
-            var car = await _context.Cars.FindAsync(id);
-
-            if (car == null)
-            {
-                return NotFound();
-            }
-
-            return car;
+            var result = await _carService.GetCarByIdAsync(id);
+            return result.Success ? Ok(result) : NotFound(result);
         }
 
         // PUT: api/Cars/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutCar(int id, Car car)
+        public async Task<ActionResult<ResponseData<Car>>> PutCar(int id, Car car)
         {
-            if (id != car.Id)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(car).State = EntityState.Modified;
-
             try
             {
-                await _context.SaveChangesAsync();
+                await _carService.UpdateCarAsync(id, car);
             }
-            catch (DbUpdateConcurrencyException)
+            catch (Exception ex)
             {
-                if (!CarExists(id))
+                return NotFound(new ResponseData<Car>()
                 {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                    Data = null,
+                    Success = false,
+                    ErrorMessage = ex.Message
+                });
             }
 
-            return NoContent();
+            return Ok(new ResponseData<Car>()
+            {
+                Data = car
+            });
         }
 
         // POST: api/Cars
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Car>> PostCar(Car car)
+        public async Task<ActionResult<ResponseData<Car>>> PostCar(Car car)
         {
-          if (_context.Cars == null)
-          {
-              return Problem("Entity set 'AppDbContext.Cars'  is null.");
-          }
-            _context.Cars.Add(car);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetCar", new { id = car.Id }, car);
+            var result = await _carService.CreateCarAsync(car);
+            return result.Success ? Ok(result.Data) : BadRequest(result);
         }
 
         // DELETE: api/Cars/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteCar(int id)
         {
-            if (_context.Cars == null)
+            try
             {
-                return NotFound();
+                await _carService.DeleteCarAsync(id);
             }
-            var car = await _context.Cars.FindAsync(id);
-            if (car == null)
+            catch (Exception ex)
             {
-                return NotFound();
+                return NotFound(new ResponseData<Car>()
+                {
+                    Data = null,
+                    Success = false,
+                    ErrorMessage = ex.Message
+                });
             }
-
-            _context.Cars.Remove(car);
-            await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        private bool CarExists(int id)
+        private async Task<bool> CarExists(int id)
         {
-            return (_context.Cars?.Any(e => e.Id == id)).GetValueOrDefault();
+            return (await _carService.GetCarByIdAsync(id)).Success;
         }
     }
 }
