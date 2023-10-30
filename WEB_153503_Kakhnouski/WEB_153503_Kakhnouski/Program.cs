@@ -13,8 +13,9 @@ namespace WEB_153503_Kakhnouski
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
-            //builder.Services.AddScoped<ICarCategoryService, MemoryCarCategoryService>();
-            //builder.Services.AddScoped<ICarService, MemoryCarService>();
+            builder.Services.AddRazorPages();
+
+
             builder.Services.AddScoped<ICarCategoryService, ApiCarCategoryService>();
             builder.Services.AddScoped<ICarService, ApiCarService>();
 
@@ -38,7 +39,7 @@ namespace WEB_153503_Kakhnouski
             app.UseStaticFiles();
 
             app.UseRouting();
-
+            app.MapRazorPages();
             app.UseAuthorization();
 
             app.MapControllerRoute(

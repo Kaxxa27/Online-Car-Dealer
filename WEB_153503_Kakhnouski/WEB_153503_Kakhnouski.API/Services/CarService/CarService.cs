@@ -12,10 +12,16 @@ public class CarService : ICarService
     private readonly AppDbContext _context;
     private readonly IConfiguration _configuration;
 
-    public CarService(AppDbContext context, IConfiguration configuration)
+    private readonly IWebHostEnvironment _webHostEnvironment;
+    private readonly IHttpContextAccessor _httpContextAccessor;
+
+    public CarService(AppDbContext context, IConfiguration configuration,
+        IWebHostEnvironment webHostEnvironment, IHttpContextAccessor httpContextAccessor)
     {
         _context = context;
         _configuration = configuration;
+        _webHostEnvironment = webHostEnvironment;
+        _httpContextAccessor = httpContextAccessor;
     }
 
     public async Task<ResponseData<Car>> CreateCarAsync(Car car)
@@ -114,6 +120,7 @@ public class CarService : ICarService
 
     public async Task<ResponseData<string>> SaveImageAsync(int id, IFormFile? formFile)
     {
+        var responseData = new ResponseData<string>();
         var car = await _context.Cars.FindAsync(id);
         if (car is null)
         {
@@ -124,24 +131,33 @@ public class CarService : ICarService
             };
         }
 
-        string imageRoot = Path.Combine(_configuration["AppUrl"]!, "images");
-        string uniqueFileName = Guid.NewGuid().ToString() + "_" + formFile.FileName;
+        var host = "https://" + _httpContextAccessor.HttpContext?.Request.Host;
+        var imageFolder = Path.Combine(_webHostEnvironment.WebRootPath, "images");
 
-        string imagePath = Path.Combine(imageRoot, uniqueFileName);
-
-        using (var stream = new FileStream(imagePath, FileMode.Create))
+        if (formFile != null)
         {
-            await formFile.CopyToAsync(stream);
+            if (!string.IsNullOrEmpty(car.Image))
+            {
+                var prevImage = Path.GetFileName(car.Image);
+                var prevImagePath = Path.Combine(imageFolder, prevImage);
+                if (File.Exists(prevImagePath))
+                {
+                    File.Delete(prevImagePath);
+                }
+            }
+            var ext = Path.GetExtension(formFile.FileName);
+            var fName = Path.ChangeExtension(Path.GetRandomFileName(), ext);
+            var filePath = Path.Combine(imageFolder, fName);
+            using (var stream = new FileStream(filePath, FileMode.Create))
+            {
+                await formFile.CopyToAsync(stream);
+            }
+
+            car.Image = $"{host}/images/{fName}";
+            await _context.SaveChangesAsync();
         }
-
-        car.Image = imagePath;
-        await _context.SaveChangesAsync();
-
-        return new ResponseData<string>
-        {
-            Data = car.Image,
-            Success = true
-        };
+        responseData.Data = car.Image;
+        return responseData;
     }
 
     public async Task UpdateCarAsync(int id, Car car)

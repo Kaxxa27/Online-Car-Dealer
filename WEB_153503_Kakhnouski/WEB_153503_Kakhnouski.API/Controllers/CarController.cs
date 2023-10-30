@@ -88,6 +88,18 @@ namespace WEB_153503_Kakhnouski.API.Controllers
             return NoContent();
         }
 
+        // POST: api/Tools/5
+        [HttpPost("{id}")]
+        public async Task<ActionResult<ResponseData<string>>> PostImage(int id, IFormFile formFile)
+        {
+            var response = await _carService.SaveImageAsync(id, formFile);
+            if (response.Success)
+            {
+                return Ok(response);
+            }
+            return NotFound(response);
+        }
+
         private async Task<bool> CarExists(int id)
         {
             return (await _carService.GetCarByIdAsync(id)).Success;

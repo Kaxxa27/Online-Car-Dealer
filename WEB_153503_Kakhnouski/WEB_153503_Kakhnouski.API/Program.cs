@@ -22,6 +22,7 @@ public class Program
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
+        builder.Services.AddHttpContextAccessor();
 
         builder.Services.AddScoped<ICarCategoryService, CarCategoryService>();
         builder.Services.AddScoped<ICarService, CarService>();

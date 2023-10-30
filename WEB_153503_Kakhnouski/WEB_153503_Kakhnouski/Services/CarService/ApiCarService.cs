@@ -81,6 +81,10 @@ public class ApiCarService : ICarService
         if (response.IsSuccessStatusCode)
         {
             var data = await response.Content.ReadFromJsonAsync<ResponseData<Car>>(_serializerOptions);
+            if (formFile != null)
+            {
+                await SaveImageAsync(data!.Data!.Id, formFile);
+            }
             return data!;
         }
         _logger.LogError($"-----> object not created. Error: {response.StatusCode}");
@@ -141,6 +145,26 @@ public class ApiCarService : ICarService
         {
             _logger.LogError($"-----> Данные не получены от сервера. Error: {response.StatusCode}");
         }
+        else if (formFile != null)
+        {
+            int carId = (await response.Content.ReadFromJsonAsync<ResponseData<Car>>(_serializerOptions))!.Data!.Id;
+            await SaveImageAsync(carId, formFile);
+        }
+    }
+
+
+    private async Task SaveImageAsync(int id, IFormFile image)
+    {
+        var request = new HttpRequestMessage
+        {
+            Method = HttpMethod.Post,
+            RequestUri = new Uri($"{_httpClient.BaseAddress?.AbsoluteUri}Car/{id}")
+        };
+        var content = new MultipartFormDataContent();
+        var streamContent = new StreamContent(image.OpenReadStream());
+        content.Add(streamContent, "formFile", image.FileName);
+        request.Content = content;
+        var response = await _httpClient.SendAsync(request);
     }
 
 }
