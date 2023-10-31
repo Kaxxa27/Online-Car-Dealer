@@ -37,7 +37,7 @@ namespace WEB_153503_Kakhnouski.API.Controllers
 
         // PUT: api/Cars/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         [HttpPut("{id}")]
         public async Task<ActionResult<ResponseData<Car>>> PutCar(int id, Car car)
         {
