@@ -63,7 +63,7 @@ namespace WEB_153503_Kakhnouski.API.Controllers
 
         // POST: api/Cars
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<ActionResult<ResponseData<Car>>> PostCar(Car car)
         {
@@ -72,7 +72,7 @@ namespace WEB_153503_Kakhnouski.API.Controllers
         }
 
         // DELETE: api/Cars/5
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteCar(int id)
         {
@@ -94,7 +94,7 @@ namespace WEB_153503_Kakhnouski.API.Controllers
         }
 
         // POST: api/Tools/5
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         [HttpPost("{id}")]
         public async Task<ActionResult<ResponseData<string>>> PostImage(int id, IFormFile formFile)
         {

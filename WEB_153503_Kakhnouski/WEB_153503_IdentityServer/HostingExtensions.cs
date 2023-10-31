@@ -1,9 +1,11 @@
 using Duende.IdentityServer;
+using Duende.IdentityServer.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 using WEB_153503_IdentityServer.Data;
 using WEB_153503_IdentityServer.Models;
+using WEB_153503_IdentityServer.Services;
 
 namespace WEB_153503_IdentityServer
 {
@@ -35,6 +37,8 @@ namespace WEB_153503_IdentityServer
                 .AddInMemoryApiScopes(Config.ApiScopes)
                 .AddInMemoryClients(Config.Clients)
                 .AddAspNetIdentity<ApplicationUser>();
+
+            builder.Services.AddScoped<IProfileService, ProfileService>();
 
             builder.Services.AddAuthentication()
                 .AddGoogle(options =>
