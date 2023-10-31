@@ -25,6 +25,33 @@ namespace WEB_153503_Kakhnouski
             builder.Services.AddHttpClient<ICarService, ApiCarService>(opt => opt.BaseAddress = new Uri(uriData.ApiUri));
             builder.Services.AddHttpClient<ICarCategoryService, ApiCarCategoryService>(opt => opt.BaseAddress = new Uri(uriData.ApiUri));
 
+            builder.Services.AddAuthentication(opt =>
+            {
+                opt.DefaultScheme = "cookie";
+                opt.DefaultChallengeScheme = "oidc";
+            })
+            .AddCookie("cookie")
+            .AddOpenIdConnect("oidc", options =>
+            {
+                options.Authority =
+                builder.Configuration["IdentityServerSettings:AuthorityUrl"];
+                options.ClientId =
+                builder.Configuration["IdentityServerSettings:ClientId"];
+                options.ClientSecret =
+                builder.Configuration["IdentityServerSettings:ClientSecret"];
+
+                // Получить Claims пользователя
+                options.GetClaimsFromUserInfoEndpoint = true;
+                options.ResponseType = "code";
+                options.ResponseMode = "query";
+                options.SaveTokens = true;
+
+                options.TokenValidationParameters.NameClaimType = "name";
+                options.TokenValidationParameters.RoleClaimType = "role";
+                options.Scope.Add(builder.Configuration["IdentityServerSettings:ClientId"]!);
+
+            });
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -39,7 +66,9 @@ namespace WEB_153503_Kakhnouski
             app.UseStaticFiles();
 
             app.UseRouting();
-            app.MapRazorPages();
+            app.MapRazorPages().RequireAuthorization();
+
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.MapControllerRoute(
