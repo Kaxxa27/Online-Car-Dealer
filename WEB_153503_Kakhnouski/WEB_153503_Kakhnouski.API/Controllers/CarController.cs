@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 using WEB_153503_Kakhnouski.Domain.Entities;
 using WEB_153503_Kakhnouski.Domain.Models;
@@ -17,6 +18,7 @@ namespace WEB_153503_Kakhnouski.API.Controllers
         }
 
         // GET: api/Cars
+        
         [HttpGet("{pageNo:int}")]
         [HttpGet("{category?}/{pageNo:int?}/")]
         public async Task<ActionResult<ResponseData<List<Car>>>> GetCars(string? category, int pageNo = 1, int pageSize = 3)
@@ -35,6 +37,7 @@ namespace WEB_153503_Kakhnouski.API.Controllers
 
         // PUT: api/Cars/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [Authorize]
         [HttpPut("{id}")]
         public async Task<ActionResult<ResponseData<Car>>> PutCar(int id, Car car)
         {
@@ -60,6 +63,7 @@ namespace WEB_153503_Kakhnouski.API.Controllers
 
         // POST: api/Cars
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [Authorize]
         [HttpPost]
         public async Task<ActionResult<ResponseData<Car>>> PostCar(Car car)
         {
@@ -68,6 +72,7 @@ namespace WEB_153503_Kakhnouski.API.Controllers
         }
 
         // DELETE: api/Cars/5
+        [Authorize]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteCar(int id)
         {
@@ -89,6 +94,7 @@ namespace WEB_153503_Kakhnouski.API.Controllers
         }
 
         // POST: api/Tools/5
+        [Authorize]
         [HttpPost("{id}")]
         public async Task<ActionResult<ResponseData<string>>> PostImage(int id, IFormFile formFile)
         {
