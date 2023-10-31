@@ -4,18 +4,23 @@ namespace WEB_153503_IdentityServer
 {
     public static class Config
     {
+        public const string Admin = "Admin";
+        public const string Customer = "Customer";
         public static IEnumerable<IdentityResource> IdentityResources =>
             new IdentityResource[]
             {
-            new IdentityResources.OpenId(),
-            new IdentityResources.Profile(),
+                new IdentityResources.OpenId(),
+                new IdentityResources.Email(),
+                new IdentityResources.Profile(),
             };
 
         public static IEnumerable<ApiScope> ApiScopes =>
             new ApiScope[]
             {
-            new ApiScope("scope1"),
-            new ApiScope("scope2"),
+                new ApiScope(name: "WEB", displayName: "My WEB Project"),
+                new ApiScope(name: "read", displayName: "Read data."),
+                new ApiScope(name: "write", displayName: "Write data."),
+                new ApiScope(name: "delete", displayName: "Delete data."),
             };
 
         public static IEnumerable<Client> Clients =>
