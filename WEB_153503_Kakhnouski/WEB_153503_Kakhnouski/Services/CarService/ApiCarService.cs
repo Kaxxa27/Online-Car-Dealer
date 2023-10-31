@@ -3,19 +3,24 @@ using System.Text;
 using WEB_153503_Kakhnouski.Domain.Models;
 using WEB_153503_Kakhnouski.Domain.Entities;
 using System.Diagnostics;
+using System.Net.Http.Headers;
+using Microsoft.AspNetCore.Authentication;
 
 namespace WEB_153503_Kakhnouski.Services.CarService;
 
 public class ApiCarService : ICarService
 {
     private readonly HttpClient _httpClient;
+    private readonly HttpContext _httpContext;
     private string _pageSize;
     private readonly JsonSerializerOptions _serializerOptions;
     private readonly ILogger<ApiCarService> _logger;
 
-    public ApiCarService(HttpClient httpClient, IConfiguration configuration, ILogger<ApiCarService> logger)
+    public ApiCarService(HttpClient httpClient,IHttpContextAccessor httpContext, IConfiguration configuration, ILogger<ApiCarService> logger)
     {
         _httpClient = httpClient;
+        _httpContext = httpContext.HttpContext;
+
         _pageSize = configuration.GetSection("ItemsPerPage").Value!;
 
         _serializerOptions = new JsonSerializerOptions()
@@ -23,6 +28,16 @@ public class ApiCarService : ICarService
             PropertyNamingPolicy = JsonNamingPolicy.CamelCase
         };
         _logger = logger;
+
+        SetCurrentJWTTokenAsync();
+    }
+
+    private async Task SetCurrentJWTTokenAsync()
+    {
+        // Получение токена текущего user
+        var token = await _httpContext.GetTokenAsync("access_token");
+        _httpClient.DefaultRequestHeaders.Authorization =
+            new AuthenticationHeaderValue("Bearer", token);
     }
 
     public async Task<ResponseData<ListModel<Car>>> GetCarListAsync(string? categoryNormalizedName, int pageNo = 1)

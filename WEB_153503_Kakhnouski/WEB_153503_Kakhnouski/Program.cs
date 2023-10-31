@@ -14,7 +14,7 @@ namespace WEB_153503_Kakhnouski
             // Add services to the container.
             builder.Services.AddControllersWithViews();
             builder.Services.AddRazorPages();
-
+            builder.Services.AddHttpContextAccessor();
 
             builder.Services.AddScoped<ICarCategoryService, ApiCarCategoryService>();
             builder.Services.AddScoped<ICarService, ApiCarService>();
