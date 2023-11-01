@@ -14,6 +14,7 @@ namespace WEB_153503_IdentityServer
         public static WebApplication ConfigureServices(this WebApplicationBuilder builder)
         {
             builder.Services.AddRazorPages();
+            builder.Services.AddControllers();
 
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
@@ -75,6 +76,8 @@ namespace WEB_153503_IdentityServer
             app.UseRouting();
             app.UseIdentityServer();
             app.UseAuthorization();
+
+            app.MapControllers();
 
             app.MapRazorPages()
                 .RequireAuthorization();
