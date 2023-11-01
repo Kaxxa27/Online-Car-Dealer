@@ -23,15 +23,18 @@ public class RegisterModel : PageModel
     private readonly SignInManager<ApplicationUser> _signInManager;
     private readonly UserManager<ApplicationUser> _userManager;
     private readonly ILogger<RegisterModel> _logger;
+    private readonly IWebHostEnvironment _webHostEnvironment;
 
     public RegisterModel(
         UserManager<ApplicationUser> userManager,
         SignInManager<ApplicationUser> signInManager,
-        ILogger<RegisterModel> logger)
+        ILogger<RegisterModel> logger,
+        IWebHostEnvironment webHostEnvironment)
     {
         _userManager = userManager;
         _signInManager = signInManager;
         _logger = logger;
+        _webHostEnvironment = webHostEnvironment;
     }
 
     [BindProperty]
@@ -62,7 +65,48 @@ public class RegisterModel : PageModel
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+
+        public IFormFile Image { get; set; }
     }
+
+    public async Task SaveImageAsync(string id)
+    {
+        string? f_filename = Input.Image?.FileName ?? "default-profile-picture.png";
+
+        var ext = Path.GetExtension(f_filename);
+        var filename = Path.ChangeExtension(id, ext);
+        var path = Path.Combine(_webHostEnvironment.WebRootPath, "images", filename);
+
+
+        if (Input.Image != null)
+        {
+            using var stream = System.IO.File.OpenWrite(path);
+            await Input.Image.CopyToAsync(stream);
+        }
+        else
+        {
+            var defaultImagePath = Path.Combine(_webHostEnvironment.WebRootPath, "images", f_filename);
+            System.IO.File.Copy(defaultImagePath, path, true);
+        }
+    }
+
+
+    //public async Task SaveImageAsync(string id)
+    //{
+    //    string? f_filename;
+    //    if(Input.Image == null)
+    //    {
+    //        f_filename = "default-profile-picture.png";
+    //        Input.Image = default!;
+    //    }
+    //    else f_filename = Input.Image.FileName;
+
+    //    var ext = Path.GetExtension(f_filename);
+    //    var filename = Path.ChangeExtension(id, ext);
+    //    var path = Path.Combine(_webHostEnvironment.WebRootPath, "images", filename);
+    //    using var stream = System.IO.File.OpenWrite(path);
+    //    await Input.Image.CopyToAsync(stream);
+    //}
 
     public async Task OnGetAsync(string returnUrl = null)
     {
@@ -81,8 +125,9 @@ public class RegisterModel : PageModel
                 UserName = Input.Name,
                 Email = Input.Email,
                 EmailConfirmed = true,
-
             };;
+
+            await SaveImageAsync(user.Id);
 
             var result = await _userManager.CreateAsync(user, Input.Password);
             var resultRole = await _userManager.AddToRoleAsync(user, Config.Customer);
