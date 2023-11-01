@@ -44,6 +44,7 @@ namespace WEB_153503_IdentityServer
                 .AddInMemoryIdentityResources(Config.IdentityResources)
                 .AddInMemoryApiScopes(Config.ApiScopes)
                 .AddInMemoryClients(Config.Clients)
+               // .AddProfileService<ProfileService>()
                 .AddAspNetIdentity<ApplicationUser>();
 
             builder.Services.AddScoped<IProfileService, ProfileService>();

@@ -90,24 +90,6 @@ public class RegisterModel : PageModel
         }
     }
 
-
-    //public async Task SaveImageAsync(string id)
-    //{
-    //    string? f_filename;
-    //    if(Input.Image == null)
-    //    {
-    //        f_filename = "default-profile-picture.png";
-    //        Input.Image = default!;
-    //    }
-    //    else f_filename = Input.Image.FileName;
-
-    //    var ext = Path.GetExtension(f_filename);
-    //    var filename = Path.ChangeExtension(id, ext);
-    //    var path = Path.Combine(_webHostEnvironment.WebRootPath, "images", filename);
-    //    using var stream = System.IO.File.OpenWrite(path);
-    //    await Input.Image.CopyToAsync(stream);
-    //}
-
     public async Task OnGetAsync(string returnUrl = null)
     {
         ReturnUrl = returnUrl;

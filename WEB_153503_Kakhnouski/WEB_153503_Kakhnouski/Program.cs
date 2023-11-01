@@ -1,4 +1,9 @@
+using Microsoft.AspNetCore.Authentication;
+using NuGet.Packaging;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 using WEB_153503_Kakhnouski.Models;
+using WEB_153503_Kakhnouski.Services;
 using WEB_153503_Kakhnouski.Services.CarCategoryService;
 using WEB_153503_Kakhnouski.Services.CarService;
 using WEB_153503_Kakhnouski.Services.CategoryServicep;
@@ -18,19 +23,22 @@ namespace WEB_153503_Kakhnouski
 
             builder.Services.AddScoped<ICarCategoryService, ApiCarCategoryService>();
             builder.Services.AddScoped<ICarService, ApiCarService>();
-
-
+            
+         
             UriData uriData = builder.Configuration.GetSection("UriData").Get<UriData>()!;
 
             builder.Services.AddHttpClient<ICarService, ApiCarService>(opt => opt.BaseAddress = new Uri(uriData.ApiUri));
             builder.Services.AddHttpClient<ICarCategoryService, ApiCarCategoryService>(opt => opt.BaseAddress = new Uri(uriData.ApiUri));
 
+
             builder.Services.AddAuthentication(opt =>
             {
                 opt.DefaultScheme = "cookie";
                 opt.DefaultChallengeScheme = "oidc";
+               // opt.DefaultChallengeScheme = "bearer";
             })
             .AddCookie("cookie")
+            //.AddJwtBearer("bearer")
             .AddOpenIdConnect("oidc", options =>
             {
                 options.Authority =
@@ -43,15 +51,32 @@ namespace WEB_153503_Kakhnouski
                 // Получить Claims пользователя
                 options.GetClaimsFromUserInfoEndpoint = true;
                 options.ResponseType = "code";
-                options.ResponseMode = "query";
-                options.SaveTokens = true;
+                options.ResponseMode = "query";           
 
                 options.TokenValidationParameters.NameClaimType = "name";
                 options.TokenValidationParameters.RoleClaimType = "role";
-                options.Scope.Add(builder.Configuration["IdentityServerSettings:ClientId"]!);
 
+                //options.Scope.Add(builder.Configuration["IdentityServerSettings:ClientId"]!);
+                options.Scope.Clear();
+                options.Scope.Add("WEB");
+                options.Scope.Add("openid");
+                options.Scope.Add("profile");
+                options.Scope.Add("email");
+                
+
+                //options.Scope.Add(builder.Configuration["IdentityServerSettings:Scopes"]!);
+                //List<string> sc = new() { "WEB", "openid", "profile", "email" };
+                //options.Scope.AddRange<string>(sc);
+                options.SaveTokens = true;
             });
 
+            builder.Services.AddAuthorization(opt =>
+            {
+                opt.AddPolicy("admin", b => b.RequireClaim("role", "admin"));
+            });
+
+
+            
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.

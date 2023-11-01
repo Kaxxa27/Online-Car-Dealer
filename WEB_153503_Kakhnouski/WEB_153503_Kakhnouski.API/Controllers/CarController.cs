@@ -41,6 +41,7 @@ namespace WEB_153503_Kakhnouski.API.Controllers
         [HttpPut("{id}")]
         public async Task<ActionResult<ResponseData<Car>>> PutCar(int id, Car car)
         {
+            var res = User;
             try
             {
                 await _carService.UpdateCarAsync(id, car);
