@@ -1,4 +1,6 @@
+using Serilog;
 using WEB_153503_Kakhnouski.Domain.Models.Cart;
+using WEB_153503_Kakhnouski.Middleware;
 using WEB_153503_Kakhnouski.Models;
 using WEB_153503_Kakhnouski.Services.CarCategoryService;
 using WEB_153503_Kakhnouski.Services.CarService;
@@ -75,8 +77,11 @@ namespace WEB_153503_Kakhnouski
                 opt.AddPolicy("admin", b => b.RequireClaim("role", "admin"));
             });
 
+            var logger = new LoggerConfiguration()
+            .ReadFrom.Configuration(builder.Configuration)
+            .CreateLogger();
 
-            
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -90,6 +95,7 @@ namespace WEB_153503_Kakhnouski
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
+   
             app.UseRouting();
             app.MapRazorPages().RequireAuthorization();
 
@@ -101,6 +107,8 @@ namespace WEB_153503_Kakhnouski
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
+
+            app.UseMiddleware<LogMiddleware>(logger);
 
             app.Run();
         }
