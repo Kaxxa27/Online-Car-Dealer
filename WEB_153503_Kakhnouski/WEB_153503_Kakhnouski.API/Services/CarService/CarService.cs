@@ -8,7 +8,7 @@ namespace WEB_153503_Kakhnouski.API.Services.CarService;
 
 public class CarService : ICarService
 {
-    private const int _maxPageSize = 20;
+    public int MaxPageSize { get; } = 20;
     private readonly AppDbContext _context;
     private readonly IConfiguration _configuration;
 
@@ -79,8 +79,8 @@ public class CarService : ICarService
 
     public async Task<ResponseData<ListModel<Car>>> GetCarListAsync(string? categoryNormalizedName, int pageNo = 1, int pageSize = 3)
     {
-        if (pageSize > _maxPageSize)
-            pageSize = _maxPageSize;
+        if (pageSize > MaxPageSize)
+            pageSize = MaxPageSize;
 
         var query = _context.Cars.AsQueryable();
         var dataList = new ListModel<Car>();

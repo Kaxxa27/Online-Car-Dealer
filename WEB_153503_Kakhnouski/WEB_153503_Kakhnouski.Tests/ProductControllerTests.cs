@@ -1,14 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Moq;
-using System.Diagnostics.CodeAnalysis;
-using WEB_153503_Kakhnouski.Controllers;
-using WEB_153503_Kakhnouski.Domain.Entities;
-using WEB_153503_Kakhnouski.Domain.Models;
-using WEB_153503_Kakhnouski.Services.CarService;
-using WEB_153503_Kakhnouski.Services.CategoryService;
-
-namespace WEB_153503_Kakhnouski.Tests;
+﻿namespace WEB_153503_Kakhnouski.Tests;
 
 public class CarControllerTests
 {
