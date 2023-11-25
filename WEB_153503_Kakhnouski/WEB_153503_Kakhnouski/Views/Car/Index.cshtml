@@ -3,9 +3,6 @@
 @{
     ViewData["Title"] = "Cars";
 
-    var request = ViewContext.HttpContext.Request;
-    var returnUrl = request.Path + request.QueryString.ToUriComponent();
-
     var categories = ViewData["caregories"] as List<Category>;
     var currentCategory = ViewData["currentCategory"] as Category;
 
@@ -14,7 +11,7 @@
 <h1>Автомобили</h1>
 
 
-<div class="row">
+<div class="col-10">
 
     <!-- Выбор категории -->
     <h2>Категории автомобилей</h2>
@@ -51,31 +48,23 @@
     </div>
     <!-- Выбор категории - конец -->
 
-    <!-- Вывод карточек -->
-    <div class="col-10 row">
-        @foreach (var car in Model.Items)
-        {
-            <div class="col-md-4">
-                <div class="card mb-4">
-                    <img src="@car.Image" width="100" height="250" class="card-img-top" alt="@car.Name">
-                    <div class="card-body">
-                        <h5 class="card-title">Марка: @car.Name</h5>
-                        <div class="card-text">Цена: @car.Price</div>
-                        <p class="card-text"> Описание: @car.Description</p>
-                        <a asp-controller="Cart" asp-action="Add" asp-route-id="@car.Id" asp-route-returnurl="@returnUrl"
-                           class="btn btn-primary">Добавить в корзину</a>
-                    </div>
-                </div>
-            </div>
-        }
+    <div id="output" class="row">
+        <partial name="_ProductIndexPartial"
+                 model="new { Model.Items, Model.CurrentPage, Model.TotalPages,
+                                  CategoryNormalizedName  = currentCategory?.NormalizedName }" />
     </div>
-    <!-- Вывод карточек - конец -->
-
-    <!-- Пагинация -->
-    <Pager current-page="@Model.CurrentPage"
-           total-pages="@Model.TotalPages"
-           category="@(currentCategory?.NormalizedName)"></Pager>
-    <!-- Пагинация - конец -->
-
 </div>
+
+@section Scripts {
+<script>
+    $(function () {
+        $('#output').on('click', '.page-link', function (event) {
+            event.preventDefault();
+            let url = $(this).attr('href');
+            $('#output').load(url);
+            history.pushState(null, null, url);
+        });
+    });
+</script>
+}
 

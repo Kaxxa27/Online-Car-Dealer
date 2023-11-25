@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using WEB_153503_Kakhnouski.Domain.Entities;
+using WEB_153503_Kakhnouski.Domain.Models;
+using WEB_153503_Kakhnouski.Extensions;
 using WEB_153503_Kakhnouski.Services.CarService;
 using WEB_153503_Kakhnouski.Services.CategoryServicep;
 
@@ -27,6 +29,19 @@ public class CarController : Controller
         var productResponse = await _carService.GetCarListAsync(category, pageNo);
         if (!productResponse.Success)
             return NotFound(productResponse.ErrorMessage);
-        return View(productResponse.Data);
+
+        if (Request.IsAjaxRequest())
+        {
+            ListModel<Car> data = productResponse.Data!;
+            return PartialView("_ProductIndexPartial", new
+            {
+                data.Items,
+                data.CurrentPage,
+                data.TotalPages,
+                CategoryNormalizedName = category
+            });
+        }
+        else return View(productResponse.Data);
+        
     }
 }
