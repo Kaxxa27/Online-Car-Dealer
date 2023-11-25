@@ -3,7 +3,7 @@ using WEB_153503_Kakhnouski.Models;
 using WEB_153503_Kakhnouski.Services.CarCategoryService;
 using WEB_153503_Kakhnouski.Services.CarService;
 using WEB_153503_Kakhnouski.Services.CartService;
-using WEB_153503_Kakhnouski.Services.CategoryServicep;
+using WEB_153503_Kakhnouski.Services.CategoryService;
 
 namespace WEB_153503_Kakhnouski
 {

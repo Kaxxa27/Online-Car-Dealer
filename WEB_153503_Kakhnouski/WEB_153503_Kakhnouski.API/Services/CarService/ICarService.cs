@@ -1,7 +1,7 @@
 ﻿using WEB_153503_Kakhnouski.Domain.Entities;
 using WEB_153503_Kakhnouski.Domain.Models;
 
-namespace WEB_153503_Kakhnouski.Services.CarService;
+namespace WEB_153503_Kakhnouski.API.Services.CarService;
 
 public interface ICarService
 {

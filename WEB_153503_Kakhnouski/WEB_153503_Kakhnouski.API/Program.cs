@@ -9,8 +9,7 @@ using System.IdentityModel.Tokens.Jwt;
 using WEB_153503_Kakhnouski.API.Data;
 using WEB_153503_Kakhnouski.API.Services.CarCategoryService;
 using WEB_153503_Kakhnouski.API.Services.CarService;
-using WEB_153503_Kakhnouski.Services.CarService;
-using WEB_153503_Kakhnouski.Services.CategoryServicep;
+using WEB_153503_Kakhnouski.API.Services;
 
 namespace WEB_153503_Kakhnouski.API;
 

@@ -1,6 +1,6 @@
 ﻿using WEB_153503_Kakhnouski.Domain.Entities;
 using WEB_153503_Kakhnouski.Domain.Models;
-using WEB_153503_Kakhnouski.Services.CategoryServicep;
+using WEB_153503_Kakhnouski.Services.CategoryService;
 
 namespace WEB_153503_Kakhnouski.Services.CarService;
 

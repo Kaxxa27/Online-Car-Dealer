@@ -2,7 +2,7 @@
 using WEB_153503_Kakhnouski.API.Data;
 using WEB_153503_Kakhnouski.Domain.Entities;
 using WEB_153503_Kakhnouski.Domain.Models;
-using WEB_153503_Kakhnouski.Services.CarService;
+using WEB_153503_Kakhnouski.API.Services.CarService;
 
 namespace WEB_153503_Kakhnouski.API.Services.CarService;
 
