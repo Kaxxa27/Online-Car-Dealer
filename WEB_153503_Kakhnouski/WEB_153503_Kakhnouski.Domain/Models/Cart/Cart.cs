@@ -31,7 +31,7 @@ public class Cart
     /// Удалить объект из корзины
     /// </summary>
     /// <param name="id"> id удаляемого объекта</param>
-    public virtual void RemoveItems(int id)
+    public virtual void Remove(int id)
     {
         CartItems.Remove(id);
     }

@@ -1,11 +1,8 @@
-using Microsoft.AspNetCore.Authentication;
-using NuGet.Packaging;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
+using WEB_153503_Kakhnouski.Domain.Models.Cart;
 using WEB_153503_Kakhnouski.Models;
-using WEB_153503_Kakhnouski.Services;
 using WEB_153503_Kakhnouski.Services.CarCategoryService;
 using WEB_153503_Kakhnouski.Services.CarService;
+using WEB_153503_Kakhnouski.Services.CartService;
 using WEB_153503_Kakhnouski.Services.CategoryServicep;
 
 namespace WEB_153503_Kakhnouski
@@ -25,8 +22,9 @@ namespace WEB_153503_Kakhnouski
 
             builder.Services.AddScoped<ICarCategoryService, ApiCarCategoryService>();
             builder.Services.AddScoped<ICarService, ApiCarService>();
-            
-         
+            builder.Services.AddScoped<Cart, SessionCart>();
+
+
             UriData uriData = builder.Configuration.GetSection("UriData").Get<UriData>()!;
 
             builder.Services.AddHttpClient<ICarService, ApiCarService>(opt => opt.BaseAddress = new Uri(uriData.ApiUri));
