@@ -20,6 +20,8 @@ namespace WEB_153503_Kakhnouski
             builder.Services.AddControllersWithViews();
             builder.Services.AddRazorPages();
             builder.Services.AddHttpContextAccessor();
+            builder.Services.AddDistributedMemoryCache();
+            builder.Services.AddSession();
 
             builder.Services.AddScoped<ICarCategoryService, ApiCarCategoryService>();
             builder.Services.AddScoped<ICarService, ApiCarService>();
@@ -92,6 +94,8 @@ namespace WEB_153503_Kakhnouski
 
             app.UseRouting();
             app.MapRazorPages().RequireAuthorization();
+
+            app.UseSession();
 
             app.UseAuthentication();
             app.UseAuthorization();
