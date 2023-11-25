@@ -17,6 +17,8 @@ public class CarController : Controller
         _carCategoryService = carCategoryService;
         _carService = carService;
     }
+
+    [Route("CarsCatalog")]
     public async Task<IActionResult> Index(string? category, int pageNo = 1)
     {
         var categoryResponse = await _carCategoryService.GetCategoryListAsync();
