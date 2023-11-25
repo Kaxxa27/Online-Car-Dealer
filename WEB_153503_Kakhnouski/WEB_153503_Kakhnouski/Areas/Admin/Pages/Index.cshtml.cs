@@ -34,9 +34,8 @@ namespace WEB_153503_Kakhnouski.Areas.Admin.Pages
 
 
             Cars = responce.Data?.Items!;
-            CurrentPage = responce.Data?.CurrentPage ?? 0;
-            CurrentPage = responce.Data?.TotalPages ?? 0;
-
+            CurrentPage = responce.Data?.CurrentPage ?? 0;      
+            TotalPages = responce.Data?.TotalPages ?? 0;
             return Page();
 
         }
