@@ -60,6 +60,18 @@ namespace WEB_153503_IdentityServer
                         "WEB"
                     }                 
                 },
+
+                new Client
+                {
+                    ClientId = "blazorApp",
+                    AllowedGrantTypes = GrantTypes.Code,
+                    RequireClientSecret = false,
+                    RedirectUris = { "https://localhost:7146/authentication/login-callback" },
+                    PostLogoutRedirectUris = { "https://localhost:7146/authentication/logout-callback" },
+                    AllowOfflineAccess = true,
+                    AllowedScopes = { "openid", "profile", "read", "write" }
+                },
+
             };
     }
 }

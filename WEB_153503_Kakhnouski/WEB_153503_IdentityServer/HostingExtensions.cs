@@ -61,6 +61,16 @@ namespace WEB_153503_IdentityServer
                     options.ClientSecret = "copy client secret from Google here";
                 });
 
+            builder.Services.AddCors(options =>
+            {
+                options.AddDefaultPolicy(builder =>
+                {
+                    builder.AllowAnyOrigin()
+                           .AllowAnyHeader()
+                           .AllowAnyMethod();
+                });
+            });
+
             return builder.Build();
         }
 
@@ -73,6 +83,7 @@ namespace WEB_153503_IdentityServer
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseCors();
             app.UseStaticFiles();
             app.UseRouting();
             app.UseIdentityServer();

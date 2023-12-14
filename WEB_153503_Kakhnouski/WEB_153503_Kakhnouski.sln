@@ -14,7 +14,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WEB_153503_Kakhnouski.API",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WEB_153503_IdentityServer", "WEB_153503_IdentityServer\WEB_153503_IdentityServer.csproj", "{0257DFC5-DB18-454C-8E3A-9F336CCF2F50}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WEB_153503_Kakhnouski.Tests", "WEB_153503_Kakhnouski.Tests\WEB_153503_Kakhnouski.Tests.csproj", "{FF7EF978-3E94-405D-9809-05A7C63ECC49}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WEB_153503_Kakhnouski.Tests", "WEB_153503_Kakhnouski.Tests\WEB_153503_Kakhnouski.Tests.csproj", "{FF7EF978-3E94-405D-9809-05A7C63ECC49}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WEB_153503_Kakhnouski.BlazorWasm", "WEB_153503_Kakhnouski.BlazorWasm\WEB_153503_Kakhnouski.BlazorWasm.csproj", "{32B25E5C-A81B-4F24-826D-6946FCCC6F57}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -42,6 +44,10 @@ Global
 		{FF7EF978-3E94-405D-9809-05A7C63ECC49}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FF7EF978-3E94-405D-9809-05A7C63ECC49}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FF7EF978-3E94-405D-9809-05A7C63ECC49}.Release|Any CPU.Build.0 = Release|Any CPU
+		{32B25E5C-A81B-4F24-826D-6946FCCC6F57}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{32B25E5C-A81B-4F24-826D-6946FCCC6F57}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{32B25E5C-A81B-4F24-826D-6946FCCC6F57}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{32B25E5C-A81B-4F24-826D-6946FCCC6F57}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
