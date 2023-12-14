@@ -106,7 +106,7 @@ public class DataService : IDataService
     {
 		ConfigureToken();
 
-		var urlString = new StringBuilder($"{_httpClient.BaseAddress!.AbsoluteUri}Cars/Car{id}");
+		var urlString = new StringBuilder($"{_httpClient.BaseAddress!.AbsoluteUri}Car/Car{id}");
         var response = await _httpClient.GetAsync(new Uri(urlString.ToString()));
 
         if (response.IsSuccessStatusCode)
@@ -141,7 +141,7 @@ public class DataService : IDataService
     {
 		ConfigureToken();
 
-		var urlString = new StringBuilder($"{_httpClient.BaseAddress?.AbsoluteUri}Categories/");
+		var urlString = new StringBuilder($"{_httpClient.BaseAddress?.AbsoluteUri}Category/");
         var response = await _httpClient.GetAsync(new Uri(urlString.ToString()));
         if (response.IsSuccessStatusCode)
         {
