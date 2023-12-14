@@ -76,17 +76,27 @@ public class Program
                 options.TokenValidationParameters.ValidTypes = new[] { "at+jwt" }; // Access Token + JWT
             });
 
-        // For check Scope
-        //builder.Services.AddAuthorization(options =>
-        //{
-        //    options.AddPolicy("ApiScope", policy =>
-        //    {
-        //        policy.RequireAuthenticatedUser();
-        //        policy.RequireClaim("scope", "WEB");
-        //    });
-        //});
+		// For check Scope
+		//builder.Services.AddAuthorization(options =>
+		//{
+		//    options.AddPolicy("ApiScope", policy =>
+		//    {
+		//        policy.RequireAuthenticatedUser();
+		//        policy.RequireClaim("scope", "WEB");
+		//    });
+		//});
 
-        var app = builder.Build();
+		builder.Services.AddCors(options =>
+		{
+			options.AddDefaultPolicy(builder =>
+			{
+				builder.AllowAnyOrigin()
+					   .AllowAnyHeader()
+					   .AllowAnyMethod();
+			});
+		});
+
+		var app = builder.Build();
 
         //await DbInitializer.SeedData(app);
 
@@ -97,6 +107,7 @@ public class Program
             app.UseSwaggerUI();
         }
 
+        app.UseCors();
         app.UseStaticFiles();
         app.UseHttpsRedirection();
 
