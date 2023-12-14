@@ -13,7 +13,8 @@ else
         <thead>
             <tr>
                 <th>Name</th>
-
+                <th>Description</th>
+                <th>Price</th>
             </tr>
         </thead>
         <tbody>
@@ -21,6 +22,8 @@ else
             {
                 <tr>
                     <td>@tl.Name</td>
+                    <td>@tl.Description</td>
+                    <td>@tl.Price</td>
                     <td> <button class="btn btn-primary" @onclick="() => CarSelected.Invoke(tl.Id)">Подробнее</button></td>
                 </tr>
             }
